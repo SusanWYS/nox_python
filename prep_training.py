@@ -109,30 +109,3 @@ def circular_hist(ax, x, bins=16, density=True, offset=0, gaps=True):
 
 
 
-
-#visualize_data(X_data,Y_data,6,100)
-
-#----------
-# model = load_ckpt(Path("model_ckpts/subj175.pkl"),GRU())
-# train_x,train_y,val_x,val_y = gen_nfold_subjs(0,subj_len,X_data,Y_data)
-# pred_y = model(train_x).detach().numpy()
-# val_y = train_y.detach().numpy()
-# Y0 = val_y.reshape((-1,2))
-# y_ = pred_y.reshape((-1,2))
-# Y0_angles = [np.angle(i[0]+i[1]*1j) for i in Y0]
-# pred_angles = [np.angle(i[0]+i[1]*1j) for i in y_]
-
-# fig,ax = plt.subplots(2,figsize = (20,16))
-# xticks = np.linspace(0,5,1000)
-# ax[0].plot(xticks,pred_y[0])
-# ax[0].set_title("Predicted")
-# ax[1].plot(xticks,val_y[0])
-# ax[1].set_title("Target")
-
-# fig,ax = plt.subplots(2,figsize = (20,16))
-# xticks = np.linspace(0,5,1000)
-# ax[0].plot(xticks,pred_angles[:1000])
-# ax[0].set_title("Predicted")
-# ax[1].plot(xticks,Y0_angles[:1000])
-# ax[1].set_title("Target")
-
