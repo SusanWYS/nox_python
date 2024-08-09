@@ -1,0 +1,8 @@
+ag120 nox
+--- setup --- 
+sydney, dabriel, may 
+- E1 impedence was a bit high but could still see eye movements in biocals 
+
+--- takedown ---
+- O1 was slightly off  
+- Chin electrodes came off during the night; not sure when

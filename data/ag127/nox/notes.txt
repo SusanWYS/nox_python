@@ -1,0 +1,15 @@
+ag127
+07/13/2023 setup
+sydney, dabriel 
+
+--- setup notes --- 
+- eye impedences a bit high; ~21-23
+- able to see eye movements and blinks in biocals 
+
+
+--- takedown notes --- 
+sydney, joe 
+- subject said everything stayed on
+- went to bed right around 10, woke up around 7 
+- eye electrode impedences were better overnight
+- all electrodes green or yellow for whole recording 
