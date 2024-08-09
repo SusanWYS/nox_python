@@ -12,6 +12,8 @@ new_old_subjs = []
 
 old_subjs_d = ['175','158',"167",'165','122','107','157','150','122','146',"104","108","127","135","141","143","144","145",'152'] #Done
 young_subjs_d = ['154','156','177','132','131','171','174','159',"124","128","110","114","119","120","123",'161']
+all_subjects = old_subjs_d + young_subjs_d
+
 def preprocess_data(subj):
     # load subject data
     eeg, eog, emg, physio, misc, raw_data, chan_names = read_edf.get_nox_data_from_edf(subj)
@@ -55,47 +57,26 @@ def preprocess_data(subj):
     print(f"data saved for {subj}")
 
 
-def plot_subj_data(subj,chn_name):
-    # Reread edf and find imp and misc
-    eeg, eog, emg, physio, misc, raw_data, chan_names = read_edf.get_nox_data_from_edf(subj)
-    eog_chns, eog_sig, eog_imp_n, eog_imp = channel_select(eog,ratio_thresh=0.3)
-    emg_chns, emg_sig, emg_imp_n, emg_imp = channel_select(emg,ratio_thresh=0.3)
-    data_to_plot,chns_to_plot = find_data_chn(misc,eog_imp,emg_imp,chan_names)
+def plot_subj_eeg_data(subj,chn_name):
+
     # Read Preprocessed Data
     eeg = pd.read_csv(f"ag{subj}/nox/eeg.csv")
     eeg_chns = np.asarray(eeg.columns)
     eeg_sig = eeg.values.T
     # extract start and end time
-    start, end = json.load(open(f"ag{subj}/nox/sleep interval", "r"))
+    start, end = 0, eeg.shape[0]
     # find if the selected chan is in the good channels
     chn_exist = chn_name in eeg_chns
     if chn_exist:
         chn_idx = np.where(eeg_chns == chn_name)[0][0]
-        fig,ax = plt.subplots(1 + len(chns_to_plot),figsize = (8,4*(1 + len(chns_to_plot))))
-        # plot imp and misc
-        plot_data(data_to_plot,chns_to_plot,x_min_max = (start,end),ax = ax[:-1])
+        fig,ax = plt.subplots()
         # plot spectro
-        plot_spect(subj,[chn_name], eeg_sig[chn_idx],axis = ax[-1])
+        plot_spect(subj,[chn_name], eeg_sig[chn_idx],axis = ax)
         fig.suptitle(f"subj {subj} chn {chn_name}")
-        fig.tight_layout()
-        fig.savefig(f"ag{subj}/nox/{chn_name}.png")
-        print(f"spect plotted for {subj}")
-    chn_name = "F4"
-    chn_exist = chn_name in eeg_chns
-    if chn_exist:
-        chn_idx = np.where(eeg_chns == chn_name)[0][0]
-        fig,ax = plt.subplots(1 + len(chns_to_plot),figsize = (8,4*(1 + len(chns_to_plot))))
-        # plot imp and misc
-        plot_data(data_to_plot,chns_to_plot,x_min_max = (start,end),ax = ax[:-1])
-        # plot spectro
-        plot_spect(subj,[chn_name], eeg_sig[chn_idx],axis = ax[-1])
-        fig.suptitle(f"subj {subj} chn {chn_name}")
-        fig.tight_layout()
-        fig.savefig(f"ag{subj}/nox/{chn_name}.png")
+        fig.savefig(f"plots/ag{subj}/{chn_name}.png")
         print(f"spect plotted for {subj}")
 
-for subj in old_subjs_d:
-    plot_subj_data(subj,"F3")
 
-for subj in young_subjs_d:
-    plot_subj_data(subj,"F3")
+for subj in all_subjects :
+    for chn in ["C3", "C4", "F3", "F4","O1", "O2"]:
+        plot_subj_eeg_data(subj,chn)

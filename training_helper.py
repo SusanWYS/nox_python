@@ -52,9 +52,9 @@ def prep_data(idx_lis,chn_name):
         y_dat = np.asarray([[np.real(y)/np.linalg.norm(y),np.imag(y)/np.linalg.norm(y)] for y in y_dat]).T
         x_dat = segment(data[:,:-20],5)
         #x_dat[:,0,:] = 
-        # x_dat_mean = np.mean(x_dat,axis = 2,keepdims = True)
-        # x_dat_std = np.std(x_dat,axis = 2,keepdims = True)
-        # x_dat = (x_dat - x_dat_mean)/x_dat_std
+        x_dat_mean = np.mean(x_dat,axis = 2,keepdims = True)
+        x_dat_std = np.std(x_dat,axis = 2,keepdims = True)
+        x_dat = (x_dat - x_dat_mean)/x_dat_std
         y_dat = segment(y_dat,5)
         X_data.append(x_dat)
         Y_data.append(y_dat)
@@ -104,8 +104,3 @@ def circular_hist(ax, x, bins=16, density=True, offset=0, gaps=True):
         ax.set_yticks([])
 
     return n, bins, patches
-
-
-
-
-

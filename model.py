@@ -20,16 +20,16 @@ import ray.cloudpickle as pickle
 def get_data(subj_list, save = False):
     if save:
         X_data,Y_data,subj_len = prep_data(subj_list,"F4")
-        np.save("X_data_un", X_data)
-        np.save("Y_data_un", Y_data)
-        np.save("subj_len_un",subj_len)
+        np.save("X_data", X_data)
+        np.save("Y_data", Y_data)
+        np.save("subj_len",subj_len)
     else:
         X_data = np.load("X_data.npy")
         Y_data = np.load("Y_data.npy")
         subj_len = np.load("subj_len.npy")
 
-    X_data = np.moveaxis(np.load("X_data_un.npy"),1,-1)
-    Y_data = np.moveaxis(np.load("Y_data_un.npy"),1,-1)
+    X_data = np.moveaxis(X_data,1,-1)
+    Y_data = np.moveaxis(Y_data,1,-1)
     
     return X_data, Y_data, subj_len
 
@@ -40,7 +40,7 @@ all_subjs_F4 = old_subjs_F4 + young_subjs_F4
 #tests_F4_old = ['143','152',]
 #tests_F4_young = ['159', '114']
 
-X_data, Y_data, subj_len = get_data(all_subjs_F4,True)
+X_data, Y_data, subj_len = get_data(all_subjs_F4)
 torch.set_default_dtype(torch.float64)
 
 class GRU(nn.Module):
@@ -66,8 +66,8 @@ class GRU(nn.Module):
 
     def forward(self, x):
         device = x.get_device()
-        #self.h1 = self.h1.to(device)
-        #self.h2 = self.h2.to(device)
+        # self.h1 = self.h1.to(device)
+        # self.h2 = self.h2.to(device)
         x,h1 = self.gru1(x,self.h1)
         x,h2 = self.gru2(x,self.h2)
         x = self.fc(x)
