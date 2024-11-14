@@ -29,7 +29,7 @@ def plot_data(data,chns,x_min_max = (0,0),ax = None):
     if ax is not None:
         for i in range(data.shape[0]): 
             ax[i].plot(data[i],label = chns[i])
-            ax[i].hlines(y = 0.5,xmin = x_min, xmax = x_max, color = 'red', lw = 3)
+            ax[i].hlines(y = 0.005,xmin = x_min, xmax = x_max, color = 'red', lw = 3)
             ax[i].set_xlabel('Sample #')
             ax[i].legend(loc="upper right")
         return ax
